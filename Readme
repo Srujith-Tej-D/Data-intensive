@@ -19,5 +19,58 @@
 
       3. modify the /etc/hosts file remove the localhost add hostname beside ip 
 
-      4. 
+      4. sudo groupadd hadoop
+         sudo useradd -ghadoop hduser -m -s /bin/bash
+         sudo passwd hduser
+         sudo usermod -aG sudo hduser
+         su - hduser
+         ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+         cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+         ssh-copy-id username@hostname ( hostname of other vms )
+         
+       5. sudo vim /etc/sysctl.conf
+          Add the below at the end of file
+
+          net.ipv6.conf.all.disable_ipv6=1
+          net.ipv6.conf.default.disable_ipv6=1
+          net.ipv6.conf.lo.disable_ipv6=1
+
+       6. sudo sysctl -p
+
+       7.  cd /home/hduser
+           curl -O https://dlcdn.apache.org/hadoop/common/hadoop-3.4.0/hadoop-3.4.0.tar.gz
+           curl -O https://www.apache.org/dyn/closer.lua/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz
+
+       8. extract the tar files in in /usr/local/ and create symlinks as hadoop and spark
+
+       9. sudo chown -R hduser:hadoop hadoop*
+          sudo chown -R hduser:hadoop spark*
+
+       10. vim /home/hduser/.bashrc 
+           Add the following at the end of file 
+           export HADOOP_CLASSPATH=/usr/lib/jvm/java-11-openjdkamd64/lib/tools.jar:/usr/local/hadoop/bin/hadoop
+           export HADOOP_MAPRED_HOME=/usr/local/hadoop
+           export HADOOP_HDFS_HOME=/usr/local/hadoop
+           export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+           export PATH=$PATH:.:/usr/lib/jvm/java-11-openjdk-amd64/bin:/usr/local/hadoop/bin
+           export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+           export LD_LIBRARY_PATH=/usr/local/hadoop/lib/native:$LD_LIBRARY_PATH
+           export SPARK_HOME=/usr/local/spark
+           export PYSPARK_PYTHON=python3
+           export PATH=$SPARK_HOME/bin:$PATH
+
+       11. source /home/hduser/.bashrc 
+
+       12. refer the configuration files uploaded for both vm1 and vm2 
+           in this path /usr/local/hadoop/etc/hadoop/
+           Refer and modify the following
+                                           * Core-site.xml
+                                           * hdfs-site.xml
+                                           * mapred-site.xml
+          
+           Note: I have uploaded all those conf file to this repo 
+
+
+        
+
        
