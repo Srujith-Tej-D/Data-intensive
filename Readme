@@ -1,3 +1,5 @@
+Github Link :- https://github.com/Srujith-Tej-D/Data-intensive.git
+
 -->  Installation Requirements:
        1. Hadoop 3.4.0
        2. Apache Spark
@@ -77,11 +79,12 @@
                             mkdir ~/hdfs
                             chmod 750 ~/hdfs
 
-        15. format name node and start dfs and yarn in vm1 
+        15. format name node and start dfs and yarn 
                      cd /usr/local/hadoop
-                     bin/hdfs namenode -format
-                     sbin/start-dfs.sh
-                     sbin/start-yarn.sh
+                     bin/hdfs namenode -format ( VM1 & VM2 )
+                     sbin/start-dfs.sh ( VM1 )
+                     sbin/start-yarn.sh ( VM1 )
+                     hdfs --daemon start datanode ( VM2 )
 
        16. modify spark-env.sh with internal and external IP of the vm by refereing the uploaded file
            file path /usr/local/spark/conf
@@ -100,6 +103,35 @@
 
        20. run spark-submit --master spark://hadoop-vm-1:7077 di-project.py
            This will result creating visulizations as png file in the execution path
+
+Note : Modify the Vm specfic config changes carefully by referig the uploaded files 
+
+
+--->  Execution Guide:
+       Important Commands :
+
+Hadoop :- 
+ sbin/start-dfs.sh
+ sbin/start-yarn.sh
+ bin/hdfs namenode -format
+
+ hdfs dfs -ls /
+ hdfs dfs -mkdir /data-intesinve
+ hdfs dfs -put airquality.csv /data-intesinve/
+ hdfs fsck /data-intesinve/airquality.csv -files -blocks -locations
+
+spark :- 
+ sbin/start-master.sh
+ sbin/start-worker.sh spark://hadoop-vm-1:7077
+ spark-submit --master spark://hadoop-vm-1:7077 di-project.py
+
+
+---> Troubleshooting Tips:
+
+      1. web UI not accessible :- check vm firewall rules
+      2. Telnet not happening ( no communication between the vm's ) :- check firewall and ports
+      3. hadoop not starting :- check from which user trying to execute and .bashrc file 
+      
            
              
             
