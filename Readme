@@ -1,2 +1,23 @@
+-->  Installation Requirements:
+       1. Hadoop 3.4.0
+       2. Apache Spark
+       3. JAVA , Open-JDK & default-JRE
+       3. Python
+       4. pip
+       5. pip install pandas
+       6. pip install plotly
+       7. pip installpyspark
+       8. pip install kaleido
 
-Read me file
+---> Setup Instructions: 
+
+       1. Create ubuntu VM's (if cluster)
+
+       2. sudo apt update
+          sudo apt install default-jre
+          sudo apt install default-jdk
+
+      3. modify the /etc/hosts file remove the localhost add hostname beside ip 
+
+      4. 
+       
