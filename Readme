@@ -70,6 +70,40 @@
           
            Note: I have uploaded all those conf file to this repo 
 
+        13. add "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" to hadoop-env.sh file 
+
+        14. create required folders:
+                            mkdir ~/tmp
+                            mkdir ~/hdfs
+                            chmod 750 ~/hdfs
+
+        15. format name node and start dfs and yarn in vm1 
+                     cd /usr/local/hadoop
+                     bin/hdfs namenode -format
+                     sbin/start-dfs.sh
+                     sbin/start-yarn.sh
+
+       16. modify spark-env.sh with internal and external IP of the vm by refereing the uploaded file
+           file path /usr/local/spark/conf
+
+       17. start spark as master and worker in vm1 and as worker in vm2
+              cd /usr/local/spark
+              sbin/start-master.sh ( VM1 )
+              sbin/start-worker.sh spark://hadoop-vm-1:7077 ( VM1 & VM2 )
+
+       18. access ui's and check 
+
+           hadoop http://external_ip:9870
+           spark  http://external_ip:8080
+
+       19. run get_and_ingest_data.sh , this will get datasets from internet and ingest to hadoop
+
+       20. run spark-submit --master spark://hadoop-vm-1:7077 di-project.py
+           This will result creating visulizations as png file in the execution path
+           
+             
+            
+            
 
         
 
